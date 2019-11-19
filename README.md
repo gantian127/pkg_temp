@@ -1,7 +1,7 @@
 # Project Title
-[![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](link to read the docs)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](link to licence)
-[![Binder](https://mybinder.org/badge_logo.svg)](binder for the repo)
+[![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](https://readthedocs.org/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/gantian127/pkg_temp/blob/master/LICENSE.txt)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/)
 
 ## Getting Started
 
