@@ -1,0 +1,3 @@
+this folder is used to create the readthedocs contents as code documentation
+$pip install sphinx
+$sphinx-quickstart

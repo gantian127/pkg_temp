@@ -1,0 +1,53 @@
+{% set version = "1.0.0" %}
+
+
+package:
+  name: pkg_temp
+  version: {{ version }}
+
+source:
+   url:
+   sha256:
+
+build:
+  number: 1
+  skip: True  # [win and vc<14]
+
+requirements:
+  build:
+    - python
+    - pip
+    - pkg-config
+  host:
+    - glib
+  run:
+    - python
+    - numpy
+    - scipy
+    - matplotlib
+    - xarray
+    - glib
+
+
+test:
+  requires:
+    - pytest
+  imports:
+    - pkg_temp
+  commands:
+    - pkg_temp --version
+    - pkg_tem --help
+
+about:
+  home: http://web-page-for-project
+  license: MIT
+  license_file: LICENSE
+  summary: project-full-name
+  description: |
+    detailed description
+  doc_url: http://readthedocs-link
+  dev_url: http://git-repo-link
+
+extra:
+  recipe-maintainers:
+    - develper-gitrepo-name
