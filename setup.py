@@ -26,4 +26,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    dependency_links=[],  # httpl inks where package can be downloaded
+    install_requires=[],  # package names that is available in pip
 )
