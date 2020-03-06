@@ -1,0 +1,49 @@
+language: generic
+os:
+- linux
+- osx
+env:
+  matrix:
+  - CONDA_ENV=3.7
+  global:
+    secure: tiHG4crO+cbVcahuzZ7IbGKepqUAvRljipih6sipilsc2sAGg/H2QaMhUJeFx/fNY1zHNgIUPcy69d3sGKnDjom0iVouLqrieth6jYd+B3I+qsRdav5xmfYVC0+MSWAGQ37t4z3WKc075/YwDx4Wn9KpQ5ngPhtk5iWEQCk69TcUo/RukvZZzGYoMQ4SXqoS/pLfER4jnUGI1RM4vcI/O/cutxErMvHUcwSQqZ7GbqYHJ16L8fJeDtJS3iU2MEvE2euXyZOQZ2LpjvqZ8vxjaVR7hVWft2Bv5tEeDDYGf4JEC/6zOGZsZ2ZbLgISdbR2k+sCZyHIwzIZarlgM1cnkz61HBllzZcnyBSqHFyyJbqPM+oJMIwM2kZLcdx4NbfWgVK1RojnhbtXXNUiERlePguTtzeabNgeJ/YihUDocQBV3T2wOrgh6MUZRa+8VzthuRFKx8oSa7G6Nr2ulmeIw0t97IK4dM7nyzZbRxkUhpQtiHNy+Yz0YU1kE4usxYsWfXO/nRvQmaCfjnW6dkXOK1tVXBGWgVxwOCSYLCUo7Yi+1PG7RMgq6UTTf92cXIyYzdTgbzekJIXZpUIuQz++2pLZXmVxhNR6GaYvRaC4UBTWv1liUJdrDhwl68iv+J1eUlAPwdmnrebkvGXas5bF6BidgKhggAzmfrE+Jnfn2gY=
+
+jobs:
+#  include:
+#  - stage: lint
+#    os: linux
+#    script:
+#    - pip install flake8
+#    - flake8 nwm
+  - stage: deploy
+    if: tag =~ v.*$
+    os: osx
+    env: CONDA_ENV=3.7
+    script:
+    - pip install twine wheel
+    - python setup.py bdist_wheel
+    - twine upload dist/*pkg_temp* -u gantian127 -p$PYPI_PASS
+before_install:
+- |
+  if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+    brew remove --force $(brew list)
+    brew cleanup -s
+    rm -rf $(brew --cache)
+  fi
+- |
+  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    curl https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh > $HOME/miniconda.sh
+  else
+    curl https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh > $HOME/miniconda.sh
+  fi
+- bash $HOME/miniconda.sh -b -p $(pwd)/anaconda
+- export PATH="$(pwd)/anaconda/bin:$PATH"
+- hash -r
+- conda config --set always_yes yes --set changeps1 no
+- conda create -n test_env python=$CONDA_ENV
+- source activate test_env
+- conda info -a && conda list
+install:
+- pip install -e .
+script:
+- echo 'test'
